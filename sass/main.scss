@@ -1,0 +1,47 @@
+@import "./_common.scss";
+
+.search_area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0px;
+  input,
+  button {
+    padding: 15px;
+    border: none;
+    outline: none;
+    margin-right: 5px;
+    border-radius: 10px 0px;
+    font-size: 15px;
+    background: rgb(255, 255, 255);
+  }
+  button {
+    font-weight: bold;
+    cursor: pointer;
+  }
+}
+
+.resultsArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .result {
+    background-color: rgba(243, 238, 238, 0.712);
+    padding: 20px;
+    text-align: center;
+    width: 33%;
+    margin: 10px;
+    font-weight: 600;
+    border-radius: 10px;
+
+  }
+  .result_history {
+    background-color: rgba(243, 238, 238, 0.712);
+    padding: 20px;
+    text-align: center;
+    width: 50%;
+    margin: 10px;
+    border-radius: 10px;
+  }
+}
