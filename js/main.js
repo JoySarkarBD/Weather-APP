@@ -45,17 +45,38 @@ function fetchData(uri) {
           pressure,
           humidity,
         };
+
+        // reset data to ui
+        const histories = document.querySelectorAll(".history");
+
+        const historyData = getDataFromLocalStorage();
+
+        if (historyData.length === 4) {
+          histories[3].remove();
+          historyData.pop();
+          historyData.unshift(weatherInfo);
+        } else {
+          historyData.unshift(weatherInfo);
+        }
+        getId(".historyList").insertAdjacentElement(
+          "afterbegin",
+          historyDataInnerHTML(weatherInfo)
+        );
+
+        // set data to local storage
+        localStorage.setItem("weather", JSON.stringify(historyData));
       }
     )
     .catch((error) => {
-      return alert("Enter valid city name.........!")
+      alert("Enter valid city name.........!");
+      console.log(error);
     })
     .finally(() => {
       displayData(weatherInfo);
     });
 }
 
-// Display Data Fcuntion
+// Display Data Function
 function displayData({
   conditionIcon,
   cityAndCountry,
@@ -67,9 +88,9 @@ function displayData({
   getId("#condition_img").src = conditionIcon;
   getId("#cityName").innerHTML = cityAndCountry;
   getId("#condition").innerHTML = weatherCondition;
-  getId("#temp").innerHTML = temp.toFixed(2);
-  getId("#pressure").innerHTML = pressure;
-  getId("#humidity").innerHTML = humidity;
+  getId(".temp").innerHTML = temp.toFixed(2);
+  getId(".pressure").innerHTML = pressure;
+  getId(".humidity").innerHTML = humidity;
 }
 
 // getting data on enter keypress from search button
@@ -93,5 +114,60 @@ getId("#search_inp").addEventListener("keypress", function (e) {
     const uri = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${key}`;
     fetchData(uri);
     getId("#search_inp").value = "";
+  }
+});
+
+// get data from local storage
+function getDataFromLocalStorage() {
+  const data = localStorage.getItem("weather");
+  let weather = [];
+  if (data) {
+    weather = JSON.parse(data);
+  }
+  return weather;
+}
+
+// load data from localStorage
+window.onload = function () {
+  const historyData = getDataFromLocalStorage();
+  historyData.forEach((data) => {
+    historyDataInnerHTML(data);
+    getId(".historyList").appendChild(historyDataInnerHTML(data));
+  });
+};
+
+// inner html function fo history
+function historyDataInnerHTML(data) {
+  const div = document.createElement("div");
+  div.className = "history";
+  div.innerHTML = `
+<div>
+  <img src=${data.conditionIcon} alt=""/>
+  </div>
+  <div class="history_info">
+      <h3 id="cityName">${data.cityAndCountry}</h3>
+      <p id="condition">${data.weatherCondition}</p>
+      <div class="weather_details">
+      Temp: <span class="temp">${data.temp.toFixed(2)}</span>°C, Pressure: <span
+      class="pressure">${
+        data.pressure
+      }</span>Pa, Humidity: <span class="humidity">${data.humidity}</span>%
+      </div>
+    </div>`;
+  return div;
+}
+
+// convert temp
+getId("#convertTemp").addEventListener("click", function (e) {
+  if (getId(".tempUnit").innerHTML === "°C") {
+    const temp = getId(".temp").innerHTML;
+    const newValue = (temp * 9) / 5 + 32;
+    getId(".temp").innerHTML = newValue.toFixed(2);
+    getId(".tempUnit").innerHTML = "°F";
+  }else{
+    const temp = getId(".temp").innerHTML;
+    const newValue = (temp - 32) * 5/9;
+    getId(".temp").innerHTML = newValue.toFixed(2);
+    getId(".tempUnit").innerHTML = "°C";
   }
 });

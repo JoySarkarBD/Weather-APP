@@ -50,6 +50,10 @@ body {
   cursor: pointer;
 }
 
+span {
+  color: red;
+}
+
 .resultsArea {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -57,26 +61,54 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
 }
 
 .resultsArea .result {
   background-color: rgba(243, 238, 238, 0.712);
   padding: 20px;
   text-align: center;
-  width: 33%;
+  width: 30%;
   margin: 10px;
   font-weight: 600;
   border-radius: 10px;
 }
 
+.resultsArea .result .weather_details .tempUnit {
+  color: black;
+}
+
 .resultsArea .result_history {
   background-color: rgba(243, 238, 238, 0.712);
   padding: 20px;
-  text-align: center;
-  width: 50%;
+  width: 40%;
   margin: 10px;
   border-radius: 10px;
+}
+
+.resultsArea .result_history .history {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.resultsArea .result_history .history .history_info {
+  font-weight: 600;
+  background-color: rgba(240, 248, 255, 0.5);
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px 0px;
+}
+
+.resultsArea button {
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  color: red;
 }
