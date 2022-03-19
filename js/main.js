@@ -136,7 +136,7 @@ window.onload = function () {
   });
 };
 
-// inner html function fo history
+// inner html function of history
 function historyDataInnerHTML(data) {
   const div = document.createElement("div");
   div.className = "history";
